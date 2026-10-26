@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  --bg: 255 255 255;
+  --bg-subtle: 255 255 255;
+  --text: 17 17 24;
+  --text-muted: 100 100 116;
+  --border: 228 228 236;
+  --card: 255 255 255;
+}
+
+.dark {
+  --bg: 12 12 16;
+  --bg-subtle: 20 20 26;
+  --text: 245 245 248;
+  --text-muted: 160 160 176;
+  --border: 40 40 50;
+  --card: 20 20 26;
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+body {
+  background-color: rgb(var(--bg-subtle));
+  color: rgb(var(--text));
+}
+
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, a:focus-visible { outline: 2px solid rgb(124 58 237); outline-offset: 4px; }
+.story-ring { background: linear-gradient(35deg,#ffc34d 5%,#f54976 45%,#ab39ba 85%); }
+.story-progress { animation: story-fill 6s linear forwards; transform-origin: left; }
+@keyframes story-fill { from {transform:scaleX(0)} to {transform:scaleX(1)} }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold
+           transition-transform duration-150 active:scale-95 disabled:opacity-50 disabled:pointer-events-none
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-loop-500 focus-visible:ring-offset-2;
+  }
+  .btn-primary {
+    @apply btn bg-loop-600 text-white hover:bg-loop-700;
+  }
+  .btn-secondary {
+    @apply btn bg-loop-50 text-loop-700 hover:bg-loop-100 dark:bg-white/10 dark:text-loop-200 dark:hover:bg-white/15;
+  }
+  .btn-ghost {
+    @apply btn bg-transparent text-current hover:bg-black/5 dark:hover:bg-white/10;
+  }
+  .card {
+    @apply rounded-card border border-[rgb(var(--border))] bg-[rgb(var(--card))] shadow-card;
+  }
+  .input {
+    @apply w-full rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg))] px-3.5 py-2.5 text-sm
+           placeholder:text-[rgb(var(--text-muted))] focus-visible:outline-none focus-visible:ring-2
+           focus-visible:ring-loop-500;
+  }
+  .skeleton {
+    @apply relative overflow-hidden bg-black/5 dark:bg-white/5;
+  }
+  .skeleton::after {
+    content: "";
+    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-black/5 to-transparent
+           dark:via-white/10 animate-shimmer;
+  }
+}
+
